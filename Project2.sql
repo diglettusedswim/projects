@@ -67,8 +67,8 @@ CREATE TABLE disk (
 	disk_name		NVARCHAR(60) NOT NULL,
 	release_date	DATE NOT NULL,
 	genre_id		INT NOT NULL REFERENCES genre(genre_id),
-	status_id		INT NOT NULL,
-	disk_type_id	INT NOT NULL	
+	status_id		INT NOT NULL REFERENCES status(status_id),
+	disk_type_id	INT NOT NULL REFERENCES disk_type(disk_type_id)	
 );
 
 CREATE TABLE disk_has_borrower (
