@@ -271,7 +271,7 @@ WHERE  disk_name = 'Here we go'
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
 VALUES (1, 1, '1-2-2012', '2-20-2012');
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
-VALUES (2, 2, '10/18/2006', '10/22/2006');
+VALUES (2, 2, '10/18/2006', NULL);
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
 VALUES (3, 3, '6/1/2007', '6/5/2007');
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
@@ -281,7 +281,7 @@ VALUES (5, 5, '3/17/2008', '3/25/2008');
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
 VALUES (6, 6, '6/1/2009', '6/19/2009');
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
-VALUES (7, 7, '11/19/2009', '11/25/2009');
+VALUES (7, 7, '11/19/2009', NULL);
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
 VALUES (8, 8, '12/2/2010', '12/12/2010');
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
@@ -297,7 +297,7 @@ VALUES (2, 13, '1/6/2012', '1/16/2012');
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
 VALUES (14, 14, '3/5/2012', '3/15/2012');
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
-VALUES (15, 10, '10/17/2012', '10/27/2012');
+VALUES (15, 10, '10/17/2012', NULL);
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
 VALUES (2, 16, '1/3/2018', '1/23/2018');
 INSERT disk_has_borrower (borrower_id, disk_id, borrower_date, returned_date)
