@@ -4,6 +4,7 @@
 /*--------------------------------------------------------------------------------*/
 /*10-9-2020		Killian			Initial Implementation of the disk inventory DB.  */
 /*10-16-2020	Killian			Add insert statements for all tables.			  */
+/*10-22-2020	Killian			*/
 /*																				  */
 /**********************************************************************************/
 
@@ -11,21 +12,21 @@
 --Create database
 
 USE master;
-DROP DATABASE IF EXISTS disk_inventoryJM;
+DROP DATABASE IF EXISTS disk_inventoryKK;
 GO
-CREATE DATABASE disk_inventoryJM;
+CREATE DATABASE disk_inventoryKK;
 GO
 
-USE disk_inventoryJM;
+USE disk_inventorykk;
 
 --Create server login & database user
-IF SUSER_ID (N'diskUserjw') IS NULL
-	CREATE LOGIN diskUserjw WITH PASSWORD = 'Pa$$w0rd', DEFAULT_DATABASE = disk_inventoryJM;
+IF SUSER_ID (N'diskUserkk') IS NULL
+	CREATE LOGIN diskUserkk WITH PASSWORD = 'Pa$$w0rd', DEFAULT_DATABASE = disk_inventoryKK;
 
-DROP USER IF EXISTS diskUserjw;
-CREATE USER diskUserjw;
+DROP USER IF EXISTS diskUserkk;
+CREATE USER diskUserkk;
 ALTER ROLE db_datareader
-	ADD MEMBER diskUserjw;
+	ADD MEMBER diskUserkk;
 
 --Create tables
 CREATE TABLE artist_type (
@@ -74,8 +75,8 @@ CREATE TABLE disk (
 CREATE TABLE disk_has_borrower (
 	borrower_id		INT NOT NULL REFERENCES borrower(borrower_id),
 	disk_id			INT NOT NULL REFERENCES disk(disk_id),
-	borrower_date	DATETIME2 NOT NULL,
-	returned_date	DATETIME2 NULL,
+	borrower_date	date NOT NULL,
+	returned_date	date NULL,
 	PRIMARY KEY (borrower_id, disk_id)
 );
 
@@ -249,6 +250,8 @@ INSERT disk (disk_name, release_date, genre_id, status_id, disk_type_id)
 VALUES ('Decisions decisions', '9/19/2012', 4, 1, 2);
 INSERT disk (disk_name, release_date, genre_id, status_id, disk_type_id)
 VALUES ('Here we go', '9/22/2014', 2, 2, 1);
+INSERT disk (disk_name, release_date, genre_id, status_id, disk_type_id)
+VALUES ('Rocket science', '4/26/1985', 1, 3, 1);
 
 --Update 1 disk row - Ch 7 Slide 19
 UPDATE disk
@@ -366,3 +369,99 @@ Borrower_id Disk_id Borrowed_date Return_date
 SELECT borrower_id, disk_id, borrower_date, returned_date
 FROM disk_has_borrower
 WHERE returned_date IS NULL;
+
+
+
+--Project 4 starts here
+--3. Show the disks in your database and any associated Individual artists only. 
+--SELECT *					--See specs for columns page 93 shows how to override name
+--FROM artist
+--							--Join to disk_has_artist - See Ch 4 for join info
+--							--Join to disk - Page 137 for explicit join
+--WHERE artist_type_id = 1
+--ORDER BY	;				
+SELECT disk_name AS DiskName, release_date AS ReleaseDate, fname AS ArtistFirstName, lname AS ArtistLastName
+FROM artist
+JOIN disk_has_artist ON disk_has_artist.artist_id = artist.artist_id
+JOIN disk ON disk.disk_id = disk_has_artist.disk_id
+WHERE artist_type_id = 1
+ORDER BY disk_name DESC;
+
+--4. Create a view called View_Individual_Artist that shows the artists’ names and not group names. Include the artist id in the view definition but do not display the id in your output.
+
+											--See create view syntax in Ch 13
+											--See specs for columns
+DROP VIEW IF EXISTS View_Individual_Artist
+GO
+CREATE VIEW View_Individual_Artist 
+AS 
+SELECT fname, lname, artist_id, artist_type_id
+FROM artist
+WHERE artist_type_id = 1
+go
+
+SELECT fname AS FirstName, lname AS LastName 
+FROM View_Individual_Artist
+go
+							--See output for other specifications
+							--See report output
+
+--5. Show the disks in your database and any associated Group artists only. Use the View_Individual_Artist view. 
+							--Similar to #3 above
+
+
+ALTER VIEW View_Individual_Artist
+AS
+SELECT disk_name AS DiskName, release_date AS ReleaseDate, fname AS GroupName
+FROM artist
+JOIN disk_has_artist ON disk_has_artist.artist_id = artist.artist_id
+JOIN disk ON disk.disk_id = disk_has_artist.disk_id
+WHERE artist_type_id = 2
+go
+
+SELECT *
+FROM View_Individual_Artist
+ORDER BY DiskName;
+go
+							--Join to disk_has_artist - See Ch 4 for join info
+							--Join to disk
+							--Can use NOT IN or NOT EXISTS & see examples in Ch 6
+							--See output for other specifications
+
+--6. Show the borrowed disks and who borrowed them.
+					--See specs
+
+SELECT fname AS First, lname AS Last, disk_name AS DiskName, borrower_date AS BorrowedDate, release_date AS ReturnedDate
+FROM borrower
+JOIN disk_has_borrower ON disk_has_borrower.borrower_id = borrower.borrower_id
+JOIN disk ON disk.disk_id = disk_has_borrower.disk_id
+WHERE status_id = 2
+
+							--Join disk_has_borrower
+							--Join disk
+							--See output for other specifications
+
+--7. Show the number of times a disk has been borrowed.
+--See chapter 5 for an aggregate function
+
+
+select disk.disk_id AS Diskid, disk_name AS DiskName, count(*) as 'Times Borrwed'
+from disk
+join disk_has_borrower on disk.disk_id = disk_has_borrower.disk_id
+group by disk.disk_id, disk_name
+order by disk.disk_id
+
+
+							--Join disk_has_borrower
+							--Add clause to group the data
+
+--8. Show the disks outstanding or on-loan and who has each disk. 
+SELECT disk_name AS DiskName, borrower_date AS Borrowed, returned_date AS Returned, lname AS LastName			--See output
+FROM disk
+JOIN disk_has_borrower ON disk_has_borrower.disk_id = disk.disk_id
+JOIN borrower ON disk_has_borrower.borrower_id = borrower.borrower_id
+WHERE returned_date IS NULL
+							--Join disk_has_borrower
+							--Join borrower
+
+							--See output for other specifications
