@@ -465,3 +465,84 @@ WHERE returned_date IS NULL
 							--Join borrower
 
 							--See output for other specifications
+
+
+
+
+/* Project 5 starts here
+--4 Create Insert, Update, and Delete stored procedures for the disk table. Update procedure accepts input parameters for all columns. Insert accepts all columns as input parameters except for identity fields. Delete accepts a primary key value for delete. */
+
+DROP PROC IF EXISTS sp_ins_disk;
+GO
+CREATE PROC sp_ins_disk
+	@disk_name nvarchar(60), @release_date date, @genre_id int,
+	@status_id int, @disk_type_id int
+AS
+	BEGIN TRY 
+		INSERT disk (disk_name, release_date, genre_id, status_id, disk_type_id)
+		VALUES (@disk_name, @release_date, @genre_id, @status_id, @disk_type_id);
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_ins_disk TO diskUserkk;
+GO
+EXEC sp_ins_disk 'Superunknown2', '3/3/1994', 4, 1, 1;
+GO
+EXEC sp_ins_disk 'Superunknown3', '3/3/1994', 4, 1, 1;
+GO
+EXEC sp_ins_disk 'Superunknown3', '3/3/1994', 4, 1, NULL;
+GO
+
+--Create update disk stored procedure
+DROP PROC IF EXISTS sp_upd_disk;
+GO
+CREATE PROC sp_upd_disk
+	@disk_id int, @disk_name nvarchar(60), @release_date date, @genre_id int,
+	@status_id int, @disk_type_id int
+AS
+	BEGIN TRY
+		UPDATE [dbo].[disk]
+			SET [disk_name] = @disk_name,
+			[release_date] = @release_date,
+			[genre_id] = @genre_id,
+			[status_id] = @status_id,
+			[disk_type_id] = @disk_type_id
+		WHERE disk_id = @disk_id;
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_upd_disk TO diskUserkk;
+GO
+EXEC sp_upd_disk 33, 'Superunknown2', '4/4/2000', 4, 1, 1;
+GO
+EXEC sp_upd_disk 34, 'Superunknown3', '4/4/2000', 4, 1, NULL;
+GO
+--Create delete disk procedure
+DROP PROC IF EXISTS sp_del_disk;
+GO
+CREATE PROC sp_del_disk
+	@disk_id INT
+	AS
+	BEGIN TRY
+		DELETE FROM [dbo].[disk]
+		      WHERE disk_id = @disk_id;
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_del_disk TO diskUserkk;
+GO
+EXEC sp_del_disk 33;
+GO
+EXEC sp_del_disk 34;
+GO
+EXEC sp_del_disk 'xxxxx';
+GO
