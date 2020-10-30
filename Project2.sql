@@ -4,8 +4,8 @@
 /*--------------------------------------------------------------------------------*/
 /*10-9-2020		Killian			Initial Implementation of the disk inventory DB.  */
 /*10-16-2020	Killian			Add insert statements for all tables.			  */
-/*10-22-2020	Killian			*/
-/*																				  */
+/*10-22-2020	Killian			Add other statements for all tables.			  */
+/*10-30-2020	Killian			Added Updates and Delete statements for tables.	  */
 /**********************************************************************************/
 
 
