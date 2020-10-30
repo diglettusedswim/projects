@@ -546,3 +546,155 @@ EXEC sp_del_disk 34;
 GO
 EXEC sp_del_disk 'xxxxx';
 GO
+
+-- Insert procedure for artist
+
+DROP PROC IF EXISTS sp_ins_artist;
+GO
+CREATE PROC sp_ins_artist
+	@fname nvarchar(60), @lname nvarchar(60), @artist_type_id int  
+AS
+	BEGIN TRY 
+		INSERT Artist
+		VALUES (@fname, @lname, @artist_type_id);
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_ins_disk TO diskUserkk;
+GO
+EXEC sp_ins_artist 'Jar Jar', 'Binks', 1
+GO
+EXEC sp_ins_artist 'Chunk, No Captin Chunk!', NULL, 2
+GO
+EXEC sp_ins_artist 'Chunk, No Captin Chunk!', NULL, NULL
+GO
+
+
+--Create update Artist stored procedure
+DROP PROC IF EXISTS sp_ins_artist;
+GO
+CREATE PROC sp_ins_artist
+	@artist_id int, @fname nvarchar(60), @lname nvarchar(60), @artist_type_id int 
+AS
+	BEGIN TRY
+		UPDATE Artist
+			SET fname = @fname, lname = @lname, artist_type_id = @artist_type_id
+		WHERE artist_id = @artist_id;
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_ins_artist TO diskUserkk;
+GO
+EXEC sp_ins_artist 22, 'Taylor', 'Swift', 1
+GO
+EXEC sp_ins_artist 23, 'Fiver Finger Death Punch', NULL, 1
+GO
+EXEC sp_ins_artist 23, 'Fiver Finger Death Punch', NULL, NULL
+
+--Create delete artist procedure
+DROP PROC IF EXISTS sp_del_artist;
+GO
+CREATE PROC sp_del_artist
+	@artist_id int
+AS
+	BEGIN TRY
+		DELETE Artist
+		WHERE artist_id = @artist_id;
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_del_artist TO diskUserkk;
+GO
+EXEC sp_del_artist 22
+GO
+EXEC sp_del_artist 23
+GO
+EXEC sp_del_artist 23
+GO
+
+
+
+-- Insert procedure for borrower
+
+DROP PROC IF EXISTS sp_ins_borrower;
+GO
+CREATE PROC sp_ins_borrower
+	@fname nvarchar(60), @lname nvarchar(60), @phone_num varchar(15)
+AS
+	BEGIN TRY 
+		INSERT Borrower (fname, lname, phone_num)
+		VALUES (@fname, @lname, @phone_num);
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_ins_borrower TO diskUserkk;
+GO
+EXEC sp_ins_borrower 'Jessica', 'Jones', '208-999-6666'
+GO
+EXEC sp_ins_borrower 'Matt', 'Pat', '208-999-6666'
+GO
+EXEC sp_ins_borrower 'Mat', 'Pat', NULL
+GO
+
+
+--Create update Borrower stored procedure
+DROP PROC IF EXISTS sp_ins_borrower;
+GO
+CREATE PROC sp_ins_borrower
+	@borrower_id int, @fname nvarchar(60), @lname nvarchar(60), @phone_num varchar(15)
+AS
+	BEGIN TRY
+		UPDATE Borrower
+			SET fname = @fname, lname = @lname, phone_num = @phone_num
+		WHERE borrower_id = @borrower_id;
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_ins_borrower TO diskUserkk;
+GO
+EXEC sp_ins_borrower 21, 'Jessica', 'Jones', '208-888-5555'
+GO
+EXEC sp_ins_borrower 22, 'Matt', 'Pat', '208-444-5555'
+GO
+EXEC sp_ins_borrower 22, 'Matt', 'Pat', NULL
+
+
+
+--Create delete disk procedure
+DROP PROC IF EXISTS sp_del_borrower;
+GO
+CREATE PROC sp_del_borrower
+	@borrower_id INT
+	AS
+	BEGIN TRY
+		DELETE FROM Borrower
+		      WHERE borrower_id = @borrower_id;
+	END TRY
+	BEGIN CATCH
+		PRINT 'An error occured.';
+		PRINT 'Message: ' + CONVERT(varchar(200), ERROR_MESSAGE());
+	END CATCH
+GO
+GRANT EXECUTE ON sp_del_borrower TO diskUserkk;
+GO
+EXEC sp_del_borrower 21;
+GO
+EXEC sp_del_borrower 22;
+GO
+EXEC sp_del_borrower NULL;
+GO
