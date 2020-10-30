@@ -544,8 +544,6 @@ EXEC sp_del_disk 33;
 GO
 EXEC sp_del_disk 34;
 GO
-EXEC sp_del_disk 'xxxxx';
-GO
 
 -- Insert procedure for artist
 
