@@ -19,5 +19,52 @@ namespace DiskInventory.Controllers
             List<Disk> disks = context.Disk.OrderBy(a => a.DiskName).ToList();
             return View(disks);
         }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            ViewBag.Action = "Add";
+            return View("Edit", new Disk());
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Action = "Edit";
+            var disk = context.Disk.Find(id);
+            return View(disk);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Disk disk)
+        {
+            if (ModelState.IsValid)
+            {
+                if (disk.DiskId == 0)
+                    context.Disk.Add(disk);
+                else
+                    context.Disk.Update(disk);
+                context.SaveChanges();
+                return RedirectToAction("List", "Disk");
+            }
+            else
+            {
+                ViewBag.ACtion = (disk.DiskId == 0) ? "Add" : "Edit";
+                return View(disk);
+            }
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var disk = context.Disk.Find(id);
+            return View(disk);
+        }
+        [HttpGet]
+        public IActionResult Delete(Disk disk)
+        {
+            context.Disk.Remove(disk);
+            context.SaveChanges();
+            return RedirectToAction("List", "Disk");
+        }
     }
 }
