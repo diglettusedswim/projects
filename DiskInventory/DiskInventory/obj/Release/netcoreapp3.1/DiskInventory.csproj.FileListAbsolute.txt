@@ -75,3 +75,5 @@ C:\New folder\projects\DiskInventory\DiskInventory\obj\Release\netcoreapp3.1\Raz
 C:\New folder\projects\DiskInventory\DiskInventory\obj\Release\netcoreapp3.1\Razor\Views\Borrower\Edit.cshtml.g.cs
 C:\New folder\projects\DiskInventory\DiskInventory\obj\Release\netcoreapp3.1\Razor\Views\Disk\Delete.cshtml.g.cs
 C:\New folder\projects\DiskInventory\DiskInventory\obj\Release\netcoreapp3.1\Razor\Views\Disk\Edit.cshtml.g.cs
+C:\New folder\projects\DiskInventory\DiskInventory\obj\Release\netcoreapp3.1\Razor\Views\DiskHasBorrower\Edit.cshtml.g.cs
+C:\New folder\projects\DiskInventory\DiskInventory\obj\Release\netcoreapp3.1\Razor\Views\DiskHasBorrower\List.cshtml.g.cs
