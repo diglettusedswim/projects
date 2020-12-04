@@ -162,10 +162,12 @@ namespace DiskInventory.Models
 
             modelBuilder.Entity<DiskHasBorrower>(entity =>
             {
-                entity.HasKey(e => new { e.BorrowerId, e.DiskId })
-                    .HasName("PK__disk_has__EE13A6067B1EF2E5");
+                //entity.HasKey(e => new { e.BorrowerId, e.DiskId })                    //Project 4 changed key
+                //    .HasName("PK__disk_has__EE13A6067B1EF2E5");                       //Project 4 changed key
 
-                entity.ToTable("disk_has_borrower");
+                entity.ToTable("disk_has_borrower");                                     //Project 4 changed key
+
+                entity.Property(e => e.Id).HasColumnName("Id");
 
                 entity.Property(e => e.BorrowerId).HasColumnName("borrower_id");
 

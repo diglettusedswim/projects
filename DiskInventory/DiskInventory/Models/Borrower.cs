@@ -12,14 +12,18 @@ namespace DiskInventory.Models
         }
 
         public int BorrowerId { get; set; }
+
         [Required(ErrorMessage="Please enter a First Name.")]
+
         public string Fname { get; set; }
+
         [Required]
         public string Lname { get; set; }
+
         [Required]
         public string PhoneNum { get; set; }
-        [Required]
 
+        [Required]
         public virtual ICollection<DiskHasBorrower> DiskHasBorrower { get; set; }
     }
 }

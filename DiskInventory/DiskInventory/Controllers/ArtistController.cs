@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DiskInventory.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiskInventory.Controllers
 {
@@ -16,7 +17,7 @@ namespace DiskInventory.Controllers
         }
         public IActionResult List()
         {
-            List<Artist> artists = context.Artist.OrderBy(a => a.Lname).ThenBy(a => a.Fname).ToList();
+            List<Artist> artists = context.Artist.OrderBy(a => a.Lname).ThenBy(a => a.Fname).Include(t => t.ArtistType).ToList();
             return View(artists);
         }
         [HttpGet]

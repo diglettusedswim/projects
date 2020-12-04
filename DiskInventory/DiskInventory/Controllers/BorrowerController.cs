@@ -59,7 +59,7 @@ namespace DiskInventory.Controllers
             var borrower = context.Borrower.Find(id);
             return View(borrower);
         }
-        [HttpGet]
+        [HttpPost]
         public IActionResult Delete(Borrower borrower)
         {
             context.Borrower.Remove(borrower);

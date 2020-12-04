@@ -73,11 +73,11 @@ CREATE TABLE disk (
 );
 
 CREATE TABLE disk_has_borrower (
+	Id INT NOT NULL PRIMARY KEY IDENTITY,
 	borrower_id		INT NOT NULL REFERENCES borrower(borrower_id),
 	disk_id			INT NOT NULL REFERENCES disk(disk_id),
 	borrower_date	date NOT NULL,
 	returned_date	date NULL,
-	PRIMARY KEY (borrower_id, disk_id)
 );
 
 CREATE TABLE disk_has_artist (
