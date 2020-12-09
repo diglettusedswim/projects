@@ -1,6 +1,6 @@
 ﻿@model List<DiskInventory.Models.DiskHasBorrower>
 @{
-    ViewBag.Title = "Disk Has Borrower Manager";
+    ViewBag.Title = "Check Out Manager";
 }
 <h1>@ViewBag.Title</h1>
 
@@ -11,9 +11,9 @@
         <thead>
             <tr>
                 <th>Disk Name</th>
-                <th>Borrower Last Name</th>
-                <th>Borrower First Name</th>
-                <th>Borrowerd Date</th>
+                <th>Check Out Last Name</th>
+                <th>Check Out First Name</th>
+                <th>Check Out Date</th>
                 <th>Returned Date</th>
                 <th></th>
             </tr>
@@ -28,7 +28,7 @@
                     <td>@diskhasborrower.BorrowerDate</td>
                     <td>@diskhasborrower.ReturnedDate</td>
                     <td>
-                        <a asp-controller="DiskHasBorrower" asp-action="Edit" asp-route-id="@diskhasborrower.DiskId">Edit</a>
+                        <a asp-controller="DiskHasBorrower" asp-action="Edit" asp-route-id="@diskhasborrower.Id">Edit</a>
                     </td>
                 </tr>
             }

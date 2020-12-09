@@ -56,7 +56,10 @@ namespace DiskInventory.Controllers
             }
             else
             {
-                ViewBag.ACtion = (disk.DiskId == 0) ? "Add" : "Edit";
+                ViewBag.Action = (disk.DiskId == 0) ? "Add" : "Edit";
+                ViewBag.Genres = context.Genre.OrderBy(g => g.Description).ToList();
+                ViewBag.Statuses = context.Status.OrderBy(s => s.Description).ToList();
+                ViewBag.DiskTypes = context.DiskType.OrderBy(dt => dt.Description).ToList();
                 return View(disk);
             }
         }
